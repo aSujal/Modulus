@@ -11,4 +11,9 @@ export default defineConfig({
         }),
         react(),
     ],
+    build: {
+        watch: {
+            include: ["resources/**"],
+        },
+    }
 });
