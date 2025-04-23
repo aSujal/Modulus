@@ -7,10 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 class Group extends Model
 {
     //^
-    public function User(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    public function GroupMembers(){
-        return $this->hasMany(GroupMember::class);
+
+    public function groupMembers()
+    {
+        return $this->belongsToMany(GroupMember::class);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }
