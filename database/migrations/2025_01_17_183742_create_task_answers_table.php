@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string("file");
             $table->string("text");
             $table->integer("score");
-            $table->foreignId("task_id");
-            $table->foreignId("user_id");
+            $table->foreignId("task_id")->constrained()->onDelete('cascade');
+            $table->foreignId("user_id")->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
