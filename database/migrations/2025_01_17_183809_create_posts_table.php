@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string("status");
             $table->date("publish_at");
             $table->integer("type");
-            $table->foreignId("group_id");
+            $table->foreignId("group_id")->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
