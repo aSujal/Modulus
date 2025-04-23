@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\EnsureUserIsOwnerMiddleware;
+use App\Http\Middleware\EnsureUserIsOwnerOrAdminMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,3 +29,9 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/groups/{id}', [GroupController::class, 'showUserGroup'])->name('users.group');
+Route::put('/groups/{id}', [GroupController::class, 'updateGroup'])->name('update.group');
+Route::delete('/groups/{id}', [GroupController::class, 'deleteGroup'])->name('delete.group');
+Route::post('/groups/create', [GroupController::class, 'createGroup'])->name('create.group');
