@@ -38,7 +38,7 @@ export default function Navigation({
                         </li>
                         <li>
                             <NavLinkWithIcon href={route('profile.edit')} active={route().current('profile.edit')} icon={<User />}>
-                                {user.name}
+                                {user.full_name}
                             </NavLinkWithIcon>
                         </li>
 
