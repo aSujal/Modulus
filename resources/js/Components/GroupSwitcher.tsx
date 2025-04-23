@@ -6,7 +6,7 @@ import {
     DropdownMenuItem,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
-import { Loader, Plus } from "lucide-react";
+import { FolderOpen, Loader, Plus } from "lucide-react";
 import { router } from "@inertiajs/react";
 import { Group } from "@/types";
 import CreateGroupModal from "./groups/CreateGroupModal";
@@ -21,7 +21,6 @@ const GroupSwitcher = ({ groups }: GroupSwitcherProps) => {
 
     const handleSwitch = (group: Group) => {
         setLoading(true);
-        // Simulate route change or send an Inertia visit
         router.visit(`/groups/${group.id}`, {
             onStart: () => setLoading(true),
             onFinish: () => setLoading(false),
@@ -36,7 +35,7 @@ const GroupSwitcher = ({ groups }: GroupSwitcherProps) => {
                         {loading ? (
                             <Loader className="size-5 animate-spin" />
                         ) : (
-                            currentGroup?.name[0].toUpperCase()
+                            currentGroup?.name[0].toUpperCase() ?? <FolderOpen/>
                         )}
                     </Button>
                 </DropdownMenuTrigger>
@@ -49,7 +48,7 @@ const GroupSwitcher = ({ groups }: GroupSwitcherProps) => {
                         onClick={() => handleSwitch(currentGroup)}
                         className="flex flex-col items-start cursor-pointer"
                     >
-                        {currentGroup?.name}
+                        {currentGroup?.name ?? "No Group Selected"}
                         <span className="text-muted-foreground text-xs">
                             Active group
                         </span>

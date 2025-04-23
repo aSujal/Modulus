@@ -1,24 +1,19 @@
-import NavLinkWithIcon from "@/Components/NavLinkWithIcon";
-import { Cog, User, Home, LogOut } from "lucide-react";
+import { Home, LogOut } from "lucide-react";
 import { usePage } from "@inertiajs/react";
 import GroupSwitcher from "@/Components/GroupSwitcher";
 import SidebarButton from "@/Components/layout/SidebarItem";
 import { Group } from "@/types";
+import { router } from "@inertiajs/react";
 
-export default function Navigation({
-    active = false,
-    className = "",
-    ...props
-}) {
+export default function Sidebar({ active = false, className = "", ...props }) {
     const user = usePage().props.auth.user;
     const groups = usePage().props.groups as Group[];
     return (
         <aside
             id="logo-sidebar"
-            className="flex flex-col items-center gap-4 bg-[#101014] pt-[9px] pb-4 w-[70px] h-full"
+            className="flex flex-col items-center gap-4 bg-[#0e0e12] pt-[9px] pb-4 w-[70px] h-full"
             aria-label="Sidebar"
         >
-   
             <div>
                 <a
                     href={route("dashboard")}
@@ -29,23 +24,23 @@ export default function Navigation({
             </div>
             <GroupSwitcher groups={groups} />
             <SidebarButton
-                icon={Home} 
+                icon={Home}
                 label="Home"
-                onClick={() => route("dashboard")}
+                onClick={() => router.visit(route("dashboard"))}
                 isActive={route().current("dashboard")}
             />
-
-         
-            <div className="mt-auto w-full ">
+            <div className="flex flex-col gap-3 mt-auto w-full">
                 <SidebarButton
-                    className="dark:bg-slate-700 bg-slate-200"
-                    onClick={() => route("profile.edit")}
-                    isActive={route().current("profile.edit")}>
+                    className="bg-slate-200 dark:bg-slate-700 text-black dark:text-white"
+                    onClick={() => router.visit(route("profile.edit"))}
+                    isActive={route().current("profile.edit")}
+                >
                     {user?.full_name?.charAt(0)}
                 </SidebarButton>
+
                 <SidebarButton
                     icon={LogOut}
-                    onClick={() => route("logout")}
+                    onClick={() => router.post(route("logout"))}
                     isActive={false}
                 />
             </div>

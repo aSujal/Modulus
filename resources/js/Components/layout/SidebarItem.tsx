@@ -26,18 +26,17 @@ const SidebarButton = ({
                 variant={"transparent"}
                 className={cn(
                     "size-9 p-2 group-hover:bg-primary/20",
-                    isActive && "bg-accent/20", className
+                    isActive && "bg-accent/20",
+                    className
                 )}
                 onClick={onClick}
             >
                 {children && children}
-                {Icon &&
-                    <Icon className="h-5 w-5 text-white group-hover:scale-110 transition-transform duration-300" />
-                }
+                {Icon && (
+                    <Icon className="w-5 h-5 text-white group-hover:scale-110 transition-transform duration-300" />
+                )}
             </Button>
-            {label &&
-                <span className="text-[11px] text-white">{label}</span>
-            }
+            {label && <span className="text-[11px] text-white">{label}</span>}
         </div>
     );
 };
