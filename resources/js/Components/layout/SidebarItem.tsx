@@ -26,7 +26,7 @@ const SidebarButton = ({
                 )}
                 onClick={onClick}
             >
-                <Icon className="size-5 text-white group-hover:scale-110 transition-all" />
+                {/* <Icon className="size-5 text-white group-hover:scale-110 transition-all" /> */}
             </Button>
             <span className="text-[11px] text-white">{label}</span>
         </div>

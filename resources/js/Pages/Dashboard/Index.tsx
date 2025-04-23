@@ -83,3 +83,4 @@ const Index = ({ groups }: { groups: Group[] }) => {
         </AuthenticatedLayout>
     );
 };
+export default Index

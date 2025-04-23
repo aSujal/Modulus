@@ -3,6 +3,7 @@ import { Cog, User, Home, LogOut } from "lucide-react";
 import { usePage } from "@inertiajs/react";
 import GroupSwitcher from "@/Components/GroupSwitcher";
 import SidebarButton from "@/Components/layout/SidebarItem";
+import { Group } from "@/types";
 
 export default function Navigation({
     active = false,
@@ -10,6 +11,7 @@ export default function Navigation({
     ...props
 }) {
     const user = usePage().props.auth.user;
+    const groups = usePage().props.groups as Group[];
     return (
         <aside
             id="logo-sidebar"
@@ -24,6 +26,7 @@ export default function Navigation({
                     <i className="mr-2 text-primary text-2xl fa-solid fa-graduation-cap"></i>
                 </a>
             </div>
+            <GroupSwitcher groups={groups} />
             <SidebarButton
                 icon={<Home />}
                 label="Home"
