@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class TaskAnswer extends Model
-{
-    //^
-    public function User() {
-        return $this->belongsTo(User::class);
+{   
+    public function groupMember()
+     {
+        return $this->belongsTo(GroupMember::class);
     }
-    public function Task(){
+
+    public function task()
+    {
         return $this->belongsTo(Task::class);
     }
 }

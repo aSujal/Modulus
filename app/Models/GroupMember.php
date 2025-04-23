@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class GroupMember extends Model
 {
     //
-    public function User(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    public function Role(){
-        return $this->belongsTo(Role::class);
-    }
-    public function Group() {
-        return $this->belongsTo(Group::class);
+
+    public function groups()
+     {
+        return $this->belongsToMany(Group::class);
     }
 }

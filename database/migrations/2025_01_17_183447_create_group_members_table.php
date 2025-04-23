@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('group_members', function (Blueprint $table) {
             $table->id();
+            $table->string("role");
             $table->foreignId("user_id");
-            $table->foreignId("role_id");
             $table->foreignId("group_id");
             $table->timestamps();
         });
