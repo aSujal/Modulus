@@ -30,7 +30,6 @@
     --chart-5: 27 87% 67%;
     --radius: 0.5rem
   }
-
   .dark {
     --test: hsl(142, 77%, 73%);
     /*background #070709*/
@@ -45,8 +44,8 @@
     --primary-foreground: 222.2 47.4% 11.2%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
-    /*muted #101014*/
-    --muted: 240 13% 7%;
+      /*muted #101014*/
+      --muted: 240 13% 7%;
     --muted-foreground: 215 20.2% 65.1%;
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
@@ -67,7 +66,6 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
   }

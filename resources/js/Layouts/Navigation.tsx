@@ -9,14 +9,14 @@ export default function Navigation({
 }) {
     const user = usePage().props.auth.user;
     return (
-        <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
-            <div className="h-full flex flex-col justify-between px-3 py-4 overflow-y-auto bg-background">
+        <aside id="logo-sidebar" className="top-0 left-0 z-40 fixed w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+            <div className="flex flex-col justify-between bg-background px-3 py-4 h-full overflow-y-auto">
                 <div>
-                    <a href={route('dashboard')} className="flex items-center ps-2.5 mb-5">
-                        <i className="fa-solid fa-graduation-cap text-2xl text-primary mr-2"></i>
-                        <span className="self-center text-xl font-semibold whitespace-nowrap text-foreground">Modulus</span>
+                    <a href={route('dashboard')} className="flex items-center mb-5 ps-2.5">
+                        <i className="mr-2 text-primary text-2xl fa-solid fa-graduation-cap"></i>
+                        <span className="self-center font-semibold text-foreground text-xl whitespace-nowrap">Modulus</span>
                     </a>
-                    <ul className="space-y-2 ">
+                    <ul className="space-y-2">
                         <li>
                             <NavLinkWithIcon href={route('dashboard')} active={route().current('dashboard')} icon={<Home />}>
                                 Dashboard
