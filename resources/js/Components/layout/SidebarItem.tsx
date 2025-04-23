@@ -1,18 +1,22 @@
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
-import React from "react";
+import React, { ReactNode } from "react";
 
 interface SidebarButtonProps {
-    icon: LucideIcon | any;
-    label: string;
+    icon?: React.ElementType;
+    label?: string;
+    className?: string;
     isActive?: boolean;
+    children?: ReactNode;
     onClick: () => void;
 }
 
 const SidebarButton = ({
     icon: Icon,
     label,
+    className,
+    children,
     isActive,
     onClick,
 }: SidebarButtonProps) => {
@@ -21,14 +25,19 @@ const SidebarButton = ({
             <Button
                 variant={"transparent"}
                 className={cn(
-                    "size-9 p-2 group-hover:bg-accent/20",
-                    isActive && "bg-accent/20"
+                    "size-9 p-2 group-hover:bg-primary/20",
+                    isActive && "bg-accent/20", className
                 )}
                 onClick={onClick}
             >
-                {/* <Icon className="size-5 text-white group-hover:scale-110 transition-all" /> */}
+                {children && children}
+                {Icon &&
+                    <Icon className="h-5 w-5 text-white group-hover:scale-110 transition-transform duration-300" />
+                }
             </Button>
-            <span className="text-[11px] text-white">{label}</span>
+            {label &&
+                <span className="text-[11px] text-white">{label}</span>
+            }
         </div>
     );
 };

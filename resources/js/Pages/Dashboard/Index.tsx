@@ -55,7 +55,7 @@ const Index = ({ groups }: { groups: Group[] }) => {
                     </h2>
 
                     <div className="gap-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                        {groups.map((group) => (
+                        {groups?.map((group) => (
                             <div
                                 key={group.id}
                                 className="bg-card shadow-sm hover:shadow-md rounded-2xl overflow-hidden transition"
