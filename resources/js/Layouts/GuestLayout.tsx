@@ -11,8 +11,12 @@ export default function Guest({ children }: PropsWithChildren) {
 
             {/* Content Container */}
             <div className='relative z-10  flex flex-col items-center justify-center gap-3 px-4 sm:px-0'>
-                <Link href="/">
-                    <ApplicationLogo className="h-20 w-20 fill-current text-gray-500" />
+            <Link href="/">
+                <a href={route('dashboard')} className="flex items-center ps-2.5 mb-5">
+                <i className="fa-solid fa-graduation-cap text-4xl text-green-300 mr-2"></i> 
+                    <span className="self-center text-3xl font-semibold whitespace-nowrap dark:text-white">Modulus</span>
+
+                  </a>
                 </Link>
                 <div className="sm:min-w-[400px] px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg bg-muted">
                     {children}
