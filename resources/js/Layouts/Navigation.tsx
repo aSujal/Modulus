@@ -19,12 +19,7 @@ export default function Navigation({
                     <ul className="space-y-2">
                         <li>
                             <NavLinkWithIcon href={route('dashboard')} active={route().current('dashboard')} icon={<Home />}>
-                                Dashboard
-                            </NavLinkWithIcon>
-                        </li>
-                        <li>
-                            <NavLinkWithIcon method='post' href={route('logout')} active={false} icon={<LogOut />}>
-                                Sign Out
+                                Home
                             </NavLinkWithIcon>
                         </li>
                     </ul>
@@ -32,16 +27,15 @@ export default function Navigation({
                 <div>
                     <ul className="space-y-2">
                         <li>
-                            <NavLinkWithIcon href='test.com' disabled active={false} icon={<Cog />}>
-                                Settings
+                            <NavLinkWithIcon href={route('profile.edit')} active={route().current('profile.edit')} icon={<User />}>
+                                {user.full_name}
                             </NavLinkWithIcon>
                         </li>
                         <li>
-                            <NavLinkWithIcon href={route('profile.edit')} active={route().current('profile.edit')} icon={<User />}>
-                                {user.name}
+                            <NavLinkWithIcon method='post' href={route('logout')} active={false} icon={<LogOut />}>
+                                Sign Out
                             </NavLinkWithIcon>
                         </li>
-
                     </ul>
                 </div>
             </div>
