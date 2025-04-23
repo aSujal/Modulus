@@ -6,6 +6,8 @@ use App\Http\Requests\CreateOrUpdateGroupRequest;
 use App\Http\Resources\GroupResource;
 use App\Models\Group;
 use App\Models\GroupMember;
+use App\Models\InvitationCode;
+use App\Support\InvitationCodeGenerator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -58,6 +60,54 @@ class GroupController extends Controller
 
         $group->groupMembers()->attach(Auth::id(), ['role' => 'owner']);
 
-        return $this->backWith('success','Group Created Successfully');
+        return $this->backWith('success','Group created successfully');
+    }
+
+    public function createInvitationCode(int $id): RedirectResponse
+    {
+        $groupMember = GroupMember::findOrFail(Auth::user()->id);
+
+        if (!$groupMember->isAdminOrOwner()) {
+            return $this->backWith('error','You are not Admin or Owner');
+        }
+
+        $group = Group::with('invitationCode')->findOrFail($id);
+        if ($group->invitationCode->isNotEmpty()) {
+            return $this->backWith(
+                'error',
+                'An Invitation Code already exists',
+                ['invitationCode' => $group->invitationCode->code]
+            );
+        }
+
+        $invitationCode = $group->invitationCode()->create([
+            'code' => InvitationCodeGenerator::generate(),
+            'expires_at' => now()->addMinutes(60),
+        ]);
+
+        return $this->backWith(
+            'success',
+            'Invitation Code created successfully',
+            ['code' => $invitationCode->code]
+        );
+    }
+
+    public function joinGroup(string $code): RedirectResponse
+    {
+        $invitationCode = InvitationCode::whereCode($code)->with('group')->firstOrFail();
+
+        if ($invitationCode->expires_at < now()) {
+            $invitationCode->delete();
+
+            return $this->backWith('success','Invitation Code is expired or invalid');
+        }
+
+        if ($invitationCode->group->groupMembers()->whereUserId(Auth::id())->exists()) {
+            return $this->backWith('error','Group already joined');
+        }
+
+        $invitationCode->group->groupMembers()->attach(Auth::id(), ['role' => 'user']);
+
+        return $this->backWith('error','Group joined successfully');
     }
 }

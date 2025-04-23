@@ -9,12 +9,10 @@ use Inertia\Inertia;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(): \Inertia\Response
     {
         $groups = Group::whereUserId(Auth::id())->get();
 
-        return Inertia::render('Dashboard/Index', [
-            'groups' => GroupResource::collection($groups)->jsonSerialize(),
-        ]);
+        return Inertia::render('Dashboard/Index');
     }
 }
