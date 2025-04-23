@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+
 interface Notification {
     title?: string;
     message: string;
@@ -32,14 +34,14 @@ interface Form {
     errors: Record<string, string>;
 }
 
-export function useFormHandler(form: Form) {
+export function useFormHandler(form: any) {
     function submit(method: string, url: string, hooks: SubmitHooks = {}) {
         form.submit(
             method.toLowerCase(),
             url,
             {
-                onSuccess: (params) => handleSuccess(params, hooks.onSuccessCallback),
-                onError: (params) => handleError(params, hooks.onErrorCallback)
+                onSuccess: (params: any) => handleSuccess(params, hooks.onSuccessCallback),
+                onError: (params: any) => handleError(params, hooks.onErrorCallback)
             }
         );
     }
@@ -67,7 +69,15 @@ export function useFormHandler(form: Form) {
     }
 
     function setMessage(data: Notification) {
-        window.notify(data.title || '', data.message, data.message, data.type);
+        if(data.type === 'success') {
+            toast.success(data.message);
+        }
+        else if(data.type === 'error') {
+            toast.error(data.message);
+        }
+        else if(data.type === 'warning') {
+            toast.warning(data.message);
+        }
     }
 
     function resetForm() {

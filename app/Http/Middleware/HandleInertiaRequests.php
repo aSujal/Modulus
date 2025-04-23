@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\GroupResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -44,7 +46,7 @@ class HandleInertiaRequests extends Middleware
         
 
         if($request->user()) {
-            $data['groups'] = GroupResource::collection(User::with('groups')->findOrFail(request))->jsonSerialize();
+            $data['groups'] = GroupResource::collection(User::with('groups')->findOrFail($request))->jsonSerialize();
         }
 
         return $data;

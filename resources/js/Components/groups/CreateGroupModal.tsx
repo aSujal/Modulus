@@ -2,36 +2,25 @@ import React, { FormEvent, useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { router } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import { toast } from "sonner";
+import { useFormHandler } from "@/util/formHandler";
 interface CreateGroupModalProps {
     open: boolean;
     onClose: () => void;
 }
 const CreateGroupModal = ({ open, onClose }: CreateGroupModalProps) => {
-    const [name, setName] = useState("");
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    // const { mutate, isPending } = useCreateGroup();
+    const form = useForm({
+        name: "",
+    });
+    const {submit} = useFormHandler(form);
+
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsSubmitting(true);
 
-        router.post(
-            "/groups/create",
-            { name },
-            {
-                onSuccess: () => {
-                    toast.success("Group created");
-                    setName("");
-                    onClose();
-                },
-                onError: () => {
-                    toast.error("Something went wrong");
-                },
-                onFinish: () => setIsSubmitting(false),
-            }
-        );
+    
+        submit('POST', 'groups/create');
     };
 
     return (
@@ -43,16 +32,16 @@ const CreateGroupModal = ({ open, onClose }: CreateGroupModalProps) => {
                     </DialogHeader>
                     <form className="space-y-4" onSubmit={handleSubmit}>
                         <Input
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            disabled={isSubmitting}
+                            value={form.data.name}
+                            disabled={form.processing}
                             required
                             autoFocus
+                            onChange={(e) => form.setData("name", e.target.value)}
                             minLength={3}
                             placeholder="Group name e.g. 'DTSM', 'AWL'"
                         />
                         <div className="flex justify-end">
-                            <Button disabled={isSubmitting}>Create</Button>
+                            <Button disabled={form.processing}>Create</Button>
                         </div>
                     </form>
                 </DialogContent>
