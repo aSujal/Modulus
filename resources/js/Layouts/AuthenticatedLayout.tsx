@@ -8,9 +8,9 @@ export default function Authenticated({
     const user = usePage().props.auth.user;
 
     return (
-        <div className="min-h-screen bg-background">
-            <Navigation></Navigation>
-            <main className="sm:ml-64 pt-3">
+        <div className="flex bg-background h-[100vh]">
+            <Navigation/>
+            <main>
                 {children}
             </main>
         </div>

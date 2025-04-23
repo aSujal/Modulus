@@ -1,0 +1,83 @@
+import React, { useState } from "react";
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem,
+} from "./ui/dropdown-menu";
+import { Button } from "./ui/button";
+import { Loader, Plus } from "lucide-react";
+import { router } from "@inertiajs/react";
+import { Group } from "@/types";
+
+interface GroupSwitcherProps {
+    groups: Group[];
+}
+const GroupSwitcher = ({ groups }: GroupSwitcherProps) => {
+    const [currentGroup, setCurrentGroup] = useState<Group>(groups[0]);
+    const [loading, setLoading] = useState(false);
+    const [_open, setOpen] = useState(false);
+
+    const handleSwitch = (group: Group) => {
+        setLoading(true);
+        // Simulate route change or send an Inertia visit
+        router.visit(`/groups/${group.id}`, {
+            onStart: () => setLoading(true),
+            onFinish: () => setLoading(false),
+            onSuccess: () => setCurrentGroup(group),
+        });
+    };
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button className="bg-muted hover:bg-muted p-0 size-9 text-foreground">
+                    {loading ? (
+                        <Loader className="size-5 animate-spin" />
+                    ) : (
+                        currentGroup?.name[0].toUpperCase()
+                    )}
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="bottom" align="start" className="w-64">
+                <DropdownMenuItem
+                    onClick={() => handleSwitch(currentGroup)}
+                    className="flex flex-col items-start cursor-pointer"
+                >
+                    {currentGroup?.name}
+                    <span className="text-muted-foreground text-xs">
+                        Active group
+                    </span>
+                </DropdownMenuItem>
+                {groups
+                    .filter((group) => group.id !== currentGroup.id)
+                    .map((group) => (
+                        <DropdownMenuItem
+                            key={group?.id}
+                            onClick={() => handleSwitch(group)}
+                            className="flex justify-start items-center truncate capitalize cursor-pointer"
+                        >
+                            <div
+                                className="relative flex justify-center items-center bg-[#616061] mr-2 rounded-md size-9 overflow-hidden font-semibold text-white text-lg shrink-0"
+                            >
+                                {group.name[0].toUpperCase()}
+                            </div>
+                            <p className="truncate">{group?.name}</p>
+                        </DropdownMenuItem>
+                    ))}
+                <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={() => setOpen(true)}
+                >
+                    <div
+                        className="relative flex justify-center items-center bg-[#F2F2F2] mr-2 rounded-md size-9 overflow-hidden font-semibold text-slate-800 text-lg"
+                    >
+                        <Plus className="size-5" />
+                    </div>
+                    Create a new group
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    );
+};
+
+export default GroupSwitcher;
