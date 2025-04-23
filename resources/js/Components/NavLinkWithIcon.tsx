@@ -6,25 +6,22 @@ export default function NavLinkWithIcon({
     children,
     icon,
     ...props
-}: InertiaLinkProps & { active: boolean,icon: React.ReactNode }) {
+}: InertiaLinkProps & { active: boolean, icon: React.ReactNode }) {
     return (
         <Link
             {...props}
             className={
-                'flex items-center w-full p-2 rounded-lg group ' +
-                (active
-                    ? 'bg-green-100 text-gray-950 dark:bg-gray-700 dark:text-white '
-                    : 'text-gray-900  dark:text-white hover:bg-green-100 hover:text-gray-950 dark:hover:bg-gray-700 dark:hover:text-white ') +
+                'flex items-center w-full p-2 gap-2 rounded-lg group transition duration-75 ease-in-out text-foreground ' +
+                (active ? 'bg-primary/20 hover:bg-primary/30' : 'hover:bg-primary/10') +
                 className
             }
         >
-            <div className="flex items-center justify-center shrink-0 w-5 h-5 transition duration-75 dark:text-gray-400  dark:group-hover:text-white">
-                    {icon}
+            <div className={`flex items-center justify-center shrink-0 w-5 h-5 transition duration-75 text-foreground/80 dark:group-hover:text-foreground`}>
+                {icon}
             </div>
-            <span className="ms-3">
+            <span className={`text-foreground`}>
                 {children}
             </span>
-            
         </Link>
     );
 }
