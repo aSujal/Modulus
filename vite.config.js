@@ -11,9 +11,12 @@ export default defineConfig({
         }),
         react(),
     ],
-    build: {
-        watch: {
-            include: ["resources/**"],
-        },
+    server:{
+        cors:true,
     }
+    // build: {
+    //     watch: {
+    //         include: ["resources/**"],
+    //     },
+    // }
 });
