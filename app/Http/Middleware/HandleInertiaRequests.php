@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\GroupResource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -30,7 +32,7 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return [
+        $data = [
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
@@ -39,6 +41,14 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            'notification' => session('notification')
         ];
+        
+
+        if($request->user()) {
+            $data['groups'] = GroupResource::collection(User::with('groups')->findOrFail($request))->jsonSerialize();
+        }
+
+        return $data;
     }
 }

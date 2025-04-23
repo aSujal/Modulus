@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     //
-    public function Group() {
+    public function group()
+     {
         return $this->belongsTo(Group::class);
     }
     
