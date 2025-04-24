@@ -33,7 +33,8 @@ class User extends Authenticatable
 
     public function groups()
      {
-        return $this->hasMany(Group::class);
+        // return $this->hasMany(Group::class);
+        return $this->belongsToMany(Group::class, 'group_members', 'user_id', 'group_id');
     }
 
     public function isOwner(): bool
